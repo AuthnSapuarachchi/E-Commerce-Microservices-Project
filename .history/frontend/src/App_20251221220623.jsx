@@ -2,8 +2,16 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import keycloak, { initPromise } from './Keycloak'
 import ProductList from "./components/ProductList";
-import AdminDashboard from "./page/AdminDashboard";
 import { Routes, Route, useNavigate } from "react-router-dom";
+
+// Placeholder Admin Dashboard Component
+const AdminDashboard = () => (
+  <div style={{ textAlign: "center", marginTop: "50px" }}>
+    <h1>⚙️ Admin Dashboard</h1>
+    <p>Admin features coming soon...</p>
+    <a href="/" style={{ color: "#007bff", cursor: "pointer" }}>← Back to Store</a>
+  </div>
+);
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);

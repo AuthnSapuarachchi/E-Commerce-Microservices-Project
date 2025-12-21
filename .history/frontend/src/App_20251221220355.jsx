@@ -2,8 +2,8 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import keycloak, { initPromise } from './Keycloak'
 import ProductList from "./components/ProductList";
-import AdminDashboard from "./page/AdminDashboard";
 import { Routes, Route, useNavigate } from "react-router-dom";
+
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);

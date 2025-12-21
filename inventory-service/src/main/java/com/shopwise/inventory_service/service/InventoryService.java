@@ -43,11 +43,22 @@ public class InventoryService {
     @Transactional
     public void increaseStock(String skuCode, Integer quantity) {
         Inventory inventory = inventoryRepository.findBySkuCode(skuCode)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseGet(() -> {
+                    // IF NOT FOUND: Create a new record instead of crashing!
+                    Inventory newInv = new Inventory();
+                    newInv.setSkuCode(skuCode);
+                    newInv.setQuantity(0);
+                    return newInv;
+                });
 
+        // Add the new quantity to the existing (or new) quantity
         inventory.setQuantity(inventory.getQuantity() + quantity);
+
+        // Save it to the database
         inventoryRepository.save(inventory);
-        System.out.println("🔄 COMPENSATION: Stock restored for " + skuCode + ". New Qty: " + inventory.getQuantity());
+
+        System.out.println("✅ Stock updated for " + skuCode + ". New Qty: " + inventory.getQuantity());
+
     }
 
     public void addStock(InventoryRequest inventoryRequest) {

@@ -1,10 +1,12 @@
 package com.shopwise.inventory_service.controller;
 
 import com.shopwise.inventory_service.dto.InventoryRequest;
+import com.shopwise.inventory_service.repository.InventoryRepository;
 import com.shopwise.inventory_service.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import com.shopwise.inventory_service.model.Inventory;
 
 @RestController
 @RequestMapping("/api/inventory")
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class InventoryController {
 
     private final InventoryService inventoryService;
+    private final InventoryRepository inventoryRepository;
 
     // URL: http://localhost:8083/api/inventory?skuCode=iphone_15&quantity=1
     @GetMapping
@@ -42,6 +45,15 @@ public class InventoryController {
     public String increaseStock(@RequestParam String skuCode, @RequestParam Integer quantity) {
         inventoryService.increaseStock(skuCode, quantity);
         return "Stock increased successfully";
+    }
+
+    // ... other endpoints ...
+
+    @GetMapping("/{skuCode}")
+    @ResponseStatus(HttpStatus.OK)
+    public Inventory getInventory(@PathVariable("skuCode") String skuCode) {
+        return inventoryRepository.findBySkuCode(skuCode)
+                .orElseThrow(() -> new RuntimeException("Inventory not found for " + skuCode));
     }
 
 }
