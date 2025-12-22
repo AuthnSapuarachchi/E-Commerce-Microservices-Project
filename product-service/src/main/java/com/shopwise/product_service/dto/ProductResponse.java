@@ -1,8 +1,9 @@
 package com.shopwise.product_service.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ProductResponse {
+public class ProductResponse implements Serializable {
     private String id;
     private String name;
     private String description;
