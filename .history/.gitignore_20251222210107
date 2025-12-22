@@ -1,0 +1,12 @@
+# Jenkins runtime data (should not be version controlled)
+jenkins_home/
+
+# Keycloak runtime data
+keycloak-data/
+
+# Docker volumes
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
