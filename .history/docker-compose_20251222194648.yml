@@ -64,18 +64,16 @@ services:
       - ./keycloak-data:/opt/keycloak/data
 #    volumes:
 #      - keycloak_data:/opt/keycloak/data/h2
-  jenkins:
-    image: jenkins/jenkins:lts-jdk21
-    container_name: jenkins
-    user: root # 👈 Needed to access Docker Socket
-    ports:
-      - "9090:8080"
-      - "50000:50000"
-    volumes:
-      - ./jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock # 👈 Give Jenkins access to Docker
-    # networks:
-    #   - shopwise-network
+
+  # keycloak:
+  #   image: quay.io/keycloak/keycloak:24.0.1
+  #   container_name: keycloak
+  #   environment:
+  #     KEYCLOAK_ADMIN: admin
+  #     KEYCLOAK_ADMIN_PASSWORD: admin
+  #   command: start-dev
+  #   ports:
+  #     - "8180:8080" # Maps local 8180 to container 8080
 
   ## --- YOUR MICROSERVICES --- ##
 

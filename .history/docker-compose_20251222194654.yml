@@ -65,7 +65,7 @@ services:
 #    volumes:
 #      - keycloak_data:/opt/keycloak/data/h2
   jenkins:
-    image: jenkins/jenkins:lts-jdk21
+    image: jenkins/jenkins:lts-jdk17
     container_name: jenkins
     user: root # 👈 Needed to access Docker Socket
     ports:
@@ -74,8 +74,8 @@ services:
     volumes:
       - ./jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock # 👈 Give Jenkins access to Docker
-    # networks:
-    #   - shopwise-network
+    networks:
+      - shopwise-network
 
   ## --- YOUR MICROSERVICES --- ##
 
