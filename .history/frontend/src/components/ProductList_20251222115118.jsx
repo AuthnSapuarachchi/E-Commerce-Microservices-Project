@@ -80,7 +80,6 @@ const ProductList = ({ keycloak }) => {
           skuCode: product.skuCode || product.id, // Handles both naming conventions
           price: product.price,
           quantity: 1,
-          userEmail: userEmail
         },
         {
           headers: {

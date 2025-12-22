@@ -4,7 +4,7 @@ import keycloak, { initPromise } from './Keycloak'
 import ProductList from "./components/ProductList";
 import AdminDashboard from "./page/AdminDashboard";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import MyOrders from "./page/MyOrders";
+import MyOrders from "./MyOrders";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -33,7 +33,6 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/my-orders" element={<MyOrders />} />
       {/* ROUTE 1: THE HOME PAGE (Store) */}
       <Route path="/" element={
         <div style={{ textAlign: "center", marginTop: "50px" }}>

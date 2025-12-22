@@ -4,7 +4,7 @@ import keycloak, { initPromise } from './Keycloak'
 import ProductList from "./components/ProductList";
 import AdminDashboard from "./page/AdminDashboard";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import MyOrders from "./page/MyOrders";
+import MyOrders from ".//MyOrders";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);

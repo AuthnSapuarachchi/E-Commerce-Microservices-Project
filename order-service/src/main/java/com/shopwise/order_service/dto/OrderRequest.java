@@ -7,6 +7,8 @@ public class OrderRequest {
     private BigDecimal price;
     private Integer quantity;
 
+    private String userEmail;
+
     public String getSkuCode() {
         return skuCode;
     }
@@ -29,5 +31,13 @@ public class OrderRequest {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

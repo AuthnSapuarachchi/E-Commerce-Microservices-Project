@@ -10,6 +10,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -57,6 +58,7 @@ public class OrderService {
             order.setSkuCode(orderRequest.getSkuCode());
             order.setPrice(orderRequest.getPrice());
             order.setQuantity(orderRequest.getQuantity());
+            order.setUserId(orderRequest.getUserEmail());
 
             // SIMULATE A CRASH HERE FOR TESTING (Uncomment next line to test)
             // if(true) throw new RuntimeException("Database Crash Simulation!");
@@ -77,6 +79,10 @@ public class OrderService {
             // Re-throw the exception so the user knows it failed
             throw new RuntimeException("Order Failed. Stock has been rolled back.");
         }
+    }
+
+    public List<Order> getOrdersByUser(String userId) {
+        return orderRepository.findByUserId(userId);
     }
 
     // Must match the argument list of placeOrder + Throwable

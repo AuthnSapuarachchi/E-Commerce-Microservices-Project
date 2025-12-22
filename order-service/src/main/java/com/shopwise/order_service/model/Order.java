@@ -17,15 +17,18 @@ public class Order {
     private BigDecimal price;
     private Integer quantity;
 
+    private String userId;
+
     public Order() {
     }
 
-    public Order(Long id, String orderNumber, String skuCode, BigDecimal price, Integer quantity) {
+    public Order(Long id, String orderNumber, String skuCode, BigDecimal price, Integer quantity, String userId) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.skuCode = skuCode;
         this.price = price;
         this.quantity = quantity;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -66,5 +69,13 @@ public class Order {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
