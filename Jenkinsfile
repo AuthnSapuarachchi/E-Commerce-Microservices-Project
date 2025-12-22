@@ -23,7 +23,7 @@ pipeline {
         stage('Build & Test') {
             steps {
                 // Compile and Run Tests
-                sh 'mvn clean package -DskipTests' 
+                sh 'mvn -f product-service/pom.xml clean package -DskipTests' 
             }
         }
 
