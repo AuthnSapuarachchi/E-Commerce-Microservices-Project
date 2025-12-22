@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Pull code from GitHub
-                git branch: 'main', url: 'https://github.com/YOUR_USERNAME/shopwise-microservices.git'
+                git branch: 'main', url: 'https://github.com/AuthnSapuarachchi/shopwise-microservices.git'
             }
         }
 
