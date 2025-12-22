@@ -77,7 +77,7 @@ pipeline {
                     steps {
                         script {
                             echo "📦 Building Discovery Service..."
-                            sh 'mvn -f discovery-service/pom.xml clean package -DskipTests'
+                            sh 'mvn -f discovery-server/pom.xml clean package -DskipTests'
                             sh "docker build -t ${DOCKER_HUB_USER}/discovery-server:latest ./discovery-server"
                         }
                     }
