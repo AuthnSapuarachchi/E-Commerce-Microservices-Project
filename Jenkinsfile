@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     // Build the Product Service Image
-                    sh 'docker build -t your-docker-username/product-service:latest ./product-service'
+                    sh 'docker build -t authnbroo/product-service:latest ./product-service'
                 }
             }
         }
