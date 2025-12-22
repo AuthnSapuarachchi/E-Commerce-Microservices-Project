@@ -2,9 +2,11 @@ package com.shopwise.order_service.service;
 
 import com.shopwise.order_service.client.InventoryClient;
 import com.shopwise.order_service.client.ProductClient;
+import com.shopwise.order_service.dto.OrderLineItemsDto;
 import com.shopwise.order_service.dto.OrderRequest;
 import com.shopwise.order_service.event.OrderPlacedEvent;
 import com.shopwise.order_service.model.Order;
+import com.shopwise.order_service.model.OrderLineItems;
 import com.shopwise.order_service.repository.OrderRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -17,11 +19,11 @@ import java.util.UUID;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final ProductClient productClient; // Inject the Feign Client
-    private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate; // Inject this
+    private final ProductClient productClient;
+    private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
     private final InventoryClient inventoryClient;
 
-    // Manual Constructor Injection
+    // ✅ FIXED: Removed OrderRequest from here. We only inject Services and Repositories.
     public OrderService(OrderRepository orderRepository, ProductClient productClient, KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate, InventoryClient inventoryClient) {
         this.orderRepository = orderRepository;
         this.productClient = productClient;
@@ -31,34 +33,45 @@ public class OrderService {
 
     @CircuitBreaker(name = "inventory", fallbackMethod = "fallbackPlaceOrder")
     public void placeOrder(OrderRequest orderRequest) {
-        // 1. Call Product Service to check if product exists
-        boolean productExists = productClient.checkProductExists(orderRequest.getSkuCode());
-        System.out.println("🔹 Step 1: Calling Inventory...");
-        // Call Inventory Service
-        boolean inStock = inventoryClient.checkStock(orderRequest.getSkuCode(), orderRequest.getQuantity());
+        Order order = new Order();
+        order.setOrderNumber(UUID.randomUUID().toString());
+        order.setUserId(orderRequest.getUserEmail());
 
-        if (!productExists) {
-            throw new RuntimeException("Product with ID " + orderRequest.getSkuCode() + " not found!");
+        // 1. Convert the Request DTOs to Database Entities
+        List<OrderLineItems> orderLineItems = orderRequest.getOrderLineItemsList()
+                .stream()
+                .map(this::mapToDto)
+                .toList();
+
+        System.out.println("🔹 Received " + orderLineItems.size() + " items from Frontend.");
+
+        for (OrderLineItems item : orderLineItems) {
+            item.setOrder(order);
         }
 
-        if (!inStock) {
-            System.out.println("❌ Not in stock!");
-            throw new RuntimeException("Product not in stock");
+        order.setOrderLineItemsList(orderLineItems);
+
+        // 2. CHECK STOCK FOR ALL ITEMS (Fail Fast)
+        System.out.println("🔹 Step 1: Checking Inventory for " + orderLineItems.size() + " items...");
+
+        for (OrderLineItems item : orderLineItems) {
+            boolean inStock = inventoryClient.checkStock(item.getSkuCode(), item.getQuantity());
+            if (!inStock) {
+                System.out.println("❌ Not in stock: " + item.getSkuCode());
+                throw new RuntimeException("Product " + item.getSkuCode() + " is out of stock!");
+            }
         }
 
-        System.out.println("🔹 Step 1: Reducing Stock...");
-        inventoryClient.reduceStock(orderRequest.getSkuCode(), orderRequest.getQuantity());
+        // 3. REDUCE STOCK FOR ALL ITEMS
+        System.out.println("🔹 Step 2: Reducing Stock...");
+        for (OrderLineItems item : orderLineItems) {
+            inventoryClient.reduceStock(item.getSkuCode(), item.getQuantity());
+        }
 
         // --- START OF TRANSACTION DANGER ZONE ---
         try {
-            // 4. Save Order
-            System.out.println("🔹 Step 2: Saving Order...");
-            Order order = new Order();
-            order.setOrderNumber(UUID.randomUUID().toString());
-            order.setSkuCode(orderRequest.getSkuCode());
-            order.setPrice(orderRequest.getPrice());
-            order.setQuantity(orderRequest.getQuantity());
-            order.setUserId(orderRequest.getUserEmail());
+            // 4. Save Order (With all items inside)
+            System.out.println("🔹 Saving Order with  items.");
 
             // SIMULATE A CRASH HERE FOR TESTING (Uncomment next line to test)
             // if(true) throw new RuntimeException("Database Crash Simulation!");
@@ -66,30 +79,42 @@ public class OrderService {
             orderRepository.save(order);
 
             // 5. Notify
-            System.out.println("🔹 Step 3: Sending Notification...");
+            System.out.println("🔹 Step 4: Sending Notification...");
             kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(order.getOrderNumber()));
 
         } catch (Exception e) {
-            // --- ROLLBACK LOGIC ---
+            // --- ROLLBACK LOGIC (MULTI-ITEM) ---
             System.out.println("🔴 ERROR OCCURRED: " + e.getMessage());
-            System.out.println("🔄 TRIGGERING ROLLBACK: Adding stock back...");
+            System.out.println("🔄 TRIGGERING ROLLBACK: Restoring stock for ALL items...");
 
-            inventoryClient.increaseStock(orderRequest.getSkuCode(), orderRequest.getQuantity());
+            // Loop through the list and add stock back for each item
+            for (OrderLineItems item : orderLineItems) {
+                inventoryClient.increaseStock(item.getSkuCode(), item.getQuantity());
+            }
 
-            // Re-throw the exception so the user knows it failed
+            // Re-throw the exception so the user/frontend knows it failed
             throw new RuntimeException("Order Failed. Stock has been rolled back.");
         }
+    }
+
+    // Helper method to convert DTO to Entity
+    private OrderLineItems mapToDto(OrderLineItemsDto orderLineItemsDto) {
+        OrderLineItems orderLineItems = new OrderLineItems();
+        orderLineItems.setPrice(orderLineItemsDto.getPrice());
+        orderLineItems.setQuantity(orderLineItemsDto.getQuantity());
+        orderLineItems.setSkuCode(orderLineItemsDto.getSkuCode());
+        orderLineItems.setName(orderLineItemsDto.getName());
+        return orderLineItems;
     }
 
     public List<Order> getOrdersByUser(String userId) {
         return orderRepository.findByUserId(userId);
     }
 
-    // Must match the argument list of placeOrder + Throwable
+    // Fallback Method
     public void fallbackPlaceOrder(OrderRequest orderRequest, Throwable runtimeException) {
         System.out.println("❌ Fallback Triggered! Reason: " + runtimeException.getMessage());
         System.out.println("Cannot Place Order. Executing Fallback logic");
-        // In a real app, you might save this to a "failed_orders" database to retry later
         throw new RuntimeException("Oops! Product Service is down. Please order later.");
     }
 }

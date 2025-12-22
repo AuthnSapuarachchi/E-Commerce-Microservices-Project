@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useCart } from "../context/CartContext";
+import { useCart } from "./context/CartContext";
 
 // Receive 'keycloak' as a prop so we can use the token
 const ProductList = ({ keycloak }) => {

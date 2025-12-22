@@ -1,0 +1,100 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import keycloak from "../Keycloak";
+
+const MyOrders = () => {
+  const navigate = useNavigate();
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const token = keycloak.token;
+        const email = keycloak.tokenParsed?.email || keycloak.tokenParsed?.preferred_username;
+        
+        if (!email) {
+          throw new Error("User email not found");
+        }
+
+        console.log("Fetching orders for:", email);
+        
+        const response = await axios.get(`http://localhost:9000/api/order/user/${email}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        // Debugging: Log the data to see the structure
+        console.log("Orders Data:", response.data);
+        console.log("Orders Array:", Array.isArray(response.data) ? response.data : "Not an array");
+        
+        // Ensure we have an array
+        const ordersData = Array.isArray(response.data) ? response.data : [];
+        setOrders(ordersData);
+        setLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch orders", err);
+        setError(err.response?.data?.message || err.message || "Failed to load orders");
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  if (loading) return <div style={{textAlign: "center", marginTop: "50px"}}>Loading your history...</div>;
+  
+  if (error) return (
+    <div style={{ padding: "40px", maxWidth: "800px", margin: "0 auto" }}>
+      <h1>📦 My Orders</h1>
+      <button onClick={() => navigate("/")} style={{marginBottom: "20px", cursor: "pointer"}}>← Back to Store</button>
+      <div style={{padding: "20px", background: "#fee", border: "1px solid #fcc", borderRadius: "8px", color: "#c00"}}>
+        <strong>Error:</strong> {error}
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{ padding: "40px", maxWidth: "800px", margin: "0 auto" }}>
+      <h1>📦 My Orders</h1>
+      <button onClick={() => navigate("/")} style={{marginBottom: "20px", cursor: "pointer"}}>← Back to Store</button>
+
+      {orders.length === 0 ? (
+        <p>You haven't bought anything yet.</p>
+      ) : (
+        <div style={{ display: "grid", gap: "20px" }}>
+          {orders.map((order, index) => (
+            <div key={order.id || index} style={{ border: "1px solid #ddd", padding: "20px", borderRadius: "8px", background: "#fff", boxShadow: "0 2px 4px rgba(0,0,0,0.05)" }}>
+              
+              {/* Order Header */}
+              <div style={{display: "flex", justifyContent: "space-between", marginBottom: "10px", borderBottom: "1px solid #eee", paddingBottom: "10px"}}>
+                <div>
+                  <strong>Order #{order.orderNumber ? order.orderNumber.substring(0, 8) : "N/A"}...</strong>
+                </div>
+                <span style={{color: "green", fontWeight: "bold"}}>Confirmed</span>
+              </div>
+
+              {/* Loop through the Items List inside the Order */}
+              {order.orderLineItemsList && order.orderLineItemsList.length > 0 ? (
+                order.orderLineItemsList.map((item, itemIndex) => (
+                  <div key={item.id || itemIndex} style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px", fontSize: "14px" }}>
+                     <span>
+                       <strong>{item.skuCode || "Unknown Product"}</strong> <span style={{color: "#666"}}>x {item.quantity || 0}</span>
+                     </span>
+                     <span>${item.price || "0.00"}</span>
+                  </div>
+                ))
+              ) : (
+                <p style={{color: "#999", fontSize: "14px"}}>No items in this order.</p>
+              )}
+
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MyOrders;

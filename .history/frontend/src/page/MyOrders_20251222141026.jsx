@@ -10,36 +10,7 @@ const MyOrders = () => {
   const [debugInfo, setDebugInfo] = useState({});
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const token = keycloak.token;
-        // Get user ID (Email or Username)
-        const userIdToUse = keycloak.tokenParsed?.email || keycloak.tokenParsed?.preferred_username;
-
-        if (!userIdToUse) {
-           console.error("No User ID found");
-           setLoading(false);
-           return;
-        }
-
-        const encodedId = encodeURIComponent(userIdToUse);
-        const url = `http://localhost:9000/api/order/user/${encodedId}`;
-
-        const response = await axios.get(url, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-
-        console.log("Orders received:", response.data); // Debug log
-
-        // Direct assignment (No JSON.parse needed anymore)
-        setOrders(response.data); 
-        setLoading(false);
-
-      } catch (err) {
-        console.error("Failed to fetch orders", err);
-        setLoading(false);
-      }
-    };
+    
 
     fetchOrders();
   }, []);
@@ -50,6 +21,15 @@ const MyOrders = () => {
     <div style={{ padding: "40px", maxWidth: "800px", margin: "0 auto" }}>
       <h1>📦 My Orders</h1>
       <button onClick={() => navigate("/")} style={{marginBottom: "20px", cursor: "pointer"}}>← Back to Store</button>
+
+      {/* 👇 DEBUG BOX 👇 */}
+      <div style={{background: "#333", color: "#0f0", padding: "15px", marginBottom: "20px", fontFamily: "monospace", borderRadius: "5px", wordBreak: "break-all"}}>
+        <h3>🔍 DEBUG INFO</h3>
+        <p><strong>Email in Token:</strong> {debugInfo.email || "NULL"}</p>
+        <p><strong>Username in Token:</strong> {debugInfo.username || "NULL"}</p>
+        <p><strong>Is Data an Array?:</strong> {debugInfo.isArray}</p>
+        <p><strong>Raw Data Received:</strong> {debugInfo.rawData}</p>
+      </div>
 
       {orders.length === 0 ? (
         <p>No orders found.</p>
@@ -63,7 +43,6 @@ const MyOrders = () => {
               </div>
               {order.orderLineItemsList?.map((item) => (
                 <div key={item.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
-                    <span><strong>{item.name || item.skuCode}</strong> x {item.quantity}</span>
                    <span><strong>{item.skuCode}</strong> x {item.quantity}</span>
                    <span>${item.price}</span>
                 </div>

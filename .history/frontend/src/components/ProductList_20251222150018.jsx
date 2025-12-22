@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useCart } from "../context/CartContext";
+import { useCart } from "./context/CartContext";
 
 // Receive 'keycloak' as a prop so we can use the token
 const ProductList = ({ keycloak }) => {
@@ -206,20 +206,6 @@ const ProductList = ({ keycloak }) => {
               >
                 🛒 Buy Now
               </button>
-              <button 
-              style={{
-                background: "#ffc107", // Yellow for Cart
-                color: "black", 
-                border: "none", 
-                padding: "10px 20px", 
-                borderRadius: "5px",
-                cursor: "pointer",
-                fontWeight: "bold"
-              }}
-              onClick={() => addToCart(product)} // 👈 NEW ACTION
-            >
-              Add to Cart
-            </button>
             </div>
           ))}
         </div>

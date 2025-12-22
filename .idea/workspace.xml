@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7eb40a4d-d3d0-4342-969c-a20b2346c6c8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/dto/OrderLineItemsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/model/OrderLineItems.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/ProductList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ProductList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/page/MyOrders.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/page/MyOrders.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/dto/OrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/dto/OrderRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/model/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/repository/OrderRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/com/shopwise/order_service/service/OrderService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +113,7 @@
           <value>
             <map>
               <entry key="InventoryServiceApplication" value="STOPPED" />
-              <entry key="OrderServiceApplication" value="FAILED" />
+              <entry key="OrderServiceApplication" value="STOPPED" />
               <entry key="ProductServiceApplication" value="STOPPED" />
             </map>
           </value>

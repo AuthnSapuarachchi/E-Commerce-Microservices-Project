@@ -63,7 +63,6 @@ const MyOrders = () => {
               </div>
               {order.orderLineItemsList?.map((item) => (
                 <div key={item.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
-                    <span><strong>{item.name || item.skuCode}</strong> x {item.quantity}</span>
                    <span><strong>{item.skuCode}</strong> x {item.quantity}</span>
                    <span>${item.price}</span>
                 </div>

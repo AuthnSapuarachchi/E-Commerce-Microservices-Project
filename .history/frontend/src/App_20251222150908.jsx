@@ -37,7 +37,6 @@ function App() {
   return (
     <Routes>
       <Route path="/my-orders" element={<MyOrders />} />
-      <Route path="/cart" element={<Cart />} />
       {/* ROUTE 1: THE HOME PAGE (Store) */}
       <Route path="/" element={
         <div style={{ textAlign: "center", marginTop: "50px" }}>

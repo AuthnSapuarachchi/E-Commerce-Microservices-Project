@@ -5,7 +5,7 @@ import ProductList from "./components/ProductList";
 import AdminDashboard from "./page/AdminDashboard";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import MyOrders from "./page/MyOrders";
-import Cart from "./components/Cart";
+import Cart from "./components";
 import { useCart } from "./context/CartContext";
 
 function App() {
@@ -37,7 +37,6 @@ function App() {
   return (
     <Routes>
       <Route path="/my-orders" element={<MyOrders />} />
-      <Route path="/cart" element={<Cart />} />
       {/* ROUTE 1: THE HOME PAGE (Store) */}
       <Route path="/" element={
         <div style={{ textAlign: "center", marginTop: "50px" }}>

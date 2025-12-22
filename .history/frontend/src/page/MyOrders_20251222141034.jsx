@@ -13,11 +13,12 @@ const MyOrders = () => {
     const fetchOrders = async () => {
       try {
         const token = keycloak.token;
-        // Get user ID (Email or Username)
-        const userIdToUse = keycloak.tokenParsed?.email || keycloak.tokenParsed?.preferred_username;
+        const emailFromToken = keycloak.tokenParsed?.email;
+        const usernameFromToken = keycloak.tokenParsed?.preferred_username;
+        const userIdToUse = emailFromToken || usernameFromToken;
 
         if (!userIdToUse) {
-           console.error("No User ID found");
+           setDebugInfo({ error: "No User ID found in token" });
            setLoading(false);
            return;
         }
@@ -29,10 +30,34 @@ const MyOrders = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
 
-        console.log("Orders received:", response.data); // Debug log
+        // 👇 THE FIX: Handle String Responses 👇
+        let finalData = response.data;
 
-        // Direct assignment (No JSON.parse needed anymore)
-        setOrders(response.data); 
+        // If Backend sent a String, convert it to JSON
+        if (typeof finalData === "string") {
+            try {
+                finalData = JSON.parse(finalData);
+            } catch (e) {
+                console.error("Could not parse JSON string:", e);
+                finalData = [];
+            }
+        }
+
+        const isArray = Array.isArray(finalData);
+
+        setDebugInfo({
+             email: emailFromToken,
+             username: usernameFromToken,
+             isArray: isArray ? "YES" : "NO",
+             rawData: JSON.stringify(finalData).substring(0, 50)
+        });
+
+        if (isArray) {
+            setOrders(finalData);
+        } else {
+            setOrders([]); 
+        }
+        
         setLoading(false);
 
       } catch (err) {
@@ -51,6 +76,15 @@ const MyOrders = () => {
       <h1>📦 My Orders</h1>
       <button onClick={() => navigate("/")} style={{marginBottom: "20px", cursor: "pointer"}}>← Back to Store</button>
 
+      {/* 👇 DEBUG BOX 👇 */}
+      <div style={{background: "#333", color: "#0f0", padding: "15px", marginBottom: "20px", fontFamily: "monospace", borderRadius: "5px", wordBreak: "break-all"}}>
+        <h3>🔍 DEBUG INFO</h3>
+        <p><strong>Email in Token:</strong> {debugInfo.email || "NULL"}</p>
+        <p><strong>Username in Token:</strong> {debugInfo.username || "NULL"}</p>
+        <p><strong>Is Data an Array?:</strong> {debugInfo.isArray}</p>
+        <p><strong>Raw Data Received:</strong> {debugInfo.rawData}</p>
+      </div>
+
       {orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
@@ -63,7 +97,6 @@ const MyOrders = () => {
               </div>
               {order.orderLineItemsList?.map((item) => (
                 <div key={item.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
-                    <span><strong>{item.name || item.skuCode}</strong> x {item.quantity}</span>
                    <span><strong>{item.skuCode}</strong> x {item.quantity}</span>
                    <span>${item.price}</span>
                 </div>

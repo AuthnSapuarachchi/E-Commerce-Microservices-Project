@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useCart } from "../context/CartContext";
 
 // Receive 'keycloak' as a prop so we can use the token
 const ProductList = ({ keycloak }) => {
@@ -9,8 +8,6 @@ const ProductList = ({ keycloak }) => {
   const [successMsg, setSuccessMsg] = useState("");
   const [loading, setLoading] = useState(true);
   const successTimeoutRef = useRef(null);
-
-  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -84,7 +81,6 @@ const ProductList = ({ keycloak }) => {
           orderLineItemsList: [   // <--- The Backend now wants this Array
             {
               skuCode: product.skuCode || product.id,
-              name: product.name,
               price: product.price,
               quantity: 1
             }
@@ -206,20 +202,6 @@ const ProductList = ({ keycloak }) => {
               >
                 🛒 Buy Now
               </button>
-              <button 
-              style={{
-                background: "#ffc107", // Yellow for Cart
-                color: "black", 
-                border: "none", 
-                padding: "10px 20px", 
-                borderRadius: "5px",
-                cursor: "pointer",
-                fontWeight: "bold"
-              }}
-              onClick={() => addToCart(product)} // 👈 NEW ACTION
-            >
-              Add to Cart
-            </button>
             </div>
           ))}
         </div>

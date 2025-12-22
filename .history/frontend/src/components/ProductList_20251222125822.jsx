@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useCart } from "../context/CartContext";
 
 // Receive 'keycloak' as a prop so we can use the token
 const ProductList = ({ keycloak }) => {
@@ -9,8 +8,6 @@ const ProductList = ({ keycloak }) => {
   const [successMsg, setSuccessMsg] = useState("");
   const [loading, setLoading] = useState(true);
   const successTimeoutRef = useRef(null);
-
-  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -77,22 +74,30 @@ const ProductList = ({ keycloak }) => {
 
     try {
       const userEmail = keycloak.tokenParsed.email || keycloak.tokenParsed.preferred_username;
+      
+      // Prepare order data with proper field mapping
+      const orderData = {
+        userEmail: userEmail,
+        orderLineItemsList: [
+          {
+            skuCode: String(product.skuCode || product.id || product.name),
+            price: parseFloat(product.price) || 0,
+            quantity: 1
+          }
+        ]
+      };
+      
+      // Log the data being sent for debugging
+      console.log("Sending order data:", JSON.stringify(orderData, null, 2));
+      console.log("Product object:", product);
+      
       const response = await axios.post(
         "http://localhost:9000/api/order",
-        {
-          userEmail: userEmail,
-          orderLineItemsList: [   // <--- The Backend now wants this Array
-            {
-              skuCode: product.skuCode || product.id,
-              name: product.name,
-              price: product.price,
-              quantity: 1
-            }
-          ]
-        },
+        orderData,
         {
           headers: {
             Authorization: `Bearer ${keycloak.token}`,
+            'Content-Type': 'application/json'
           },
         }
       );
@@ -109,6 +114,7 @@ const ProductList = ({ keycloak }) => {
       
     } catch (err) {
       console.error("Purchase error:", err);
+      console.error("Error response:", err.response?.data);
       if (err.response?.status === 503) {
         setError("❌ Failed: Service Unavailable (Circuit Breaker)");
       } else if (err.response?.status === 401) {
@@ -206,20 +212,6 @@ const ProductList = ({ keycloak }) => {
               >
                 🛒 Buy Now
               </button>
-              <button 
-              style={{
-                background: "#ffc107", // Yellow for Cart
-                color: "black", 
-                border: "none", 
-                padding: "10px 20px", 
-                borderRadius: "5px",
-                cursor: "pointer",
-                fontWeight: "bold"
-              }}
-              onClick={() => addToCart(product)} // 👈 NEW ACTION
-            >
-              Add to Cart
-            </button>
             </div>
           ))}
         </div>

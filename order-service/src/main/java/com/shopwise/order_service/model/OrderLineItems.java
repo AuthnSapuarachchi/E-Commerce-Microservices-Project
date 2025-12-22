@@ -1,31 +1,31 @@
 package com.shopwise.order_service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.List;
 
 @Entity
-@Table(name = "t_orders")
+@Table(name = "t_order_line_items")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+@NoArgsConstructor
+public class OrderLineItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String orderNumber;
-    private String userId;
+    private String name;
+    private String skuCode;
+    private BigDecimal price;
+    private Integer quantity;
 
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<OrderLineItems> orderLineItemsList;
-
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    @JsonIgnore
+    private Order order;
 }
