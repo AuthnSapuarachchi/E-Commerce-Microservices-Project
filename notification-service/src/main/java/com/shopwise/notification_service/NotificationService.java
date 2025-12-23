@@ -9,7 +9,15 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
     @KafkaListener(topics = "notificationTopic")
     public void handleNotification(OrderPlacedEvent orderPlacedEvent) {
-        // Here you would send an email
-        log.info("Received Notification for Order - {}", orderPlacedEvent.getOrderNumber());
+        try {
+            // Your logic
+            log.info("Received Notification for Order - {}", orderPlacedEvent.getOrderNumber());
+
+            // Example: emailSender.send(orderPlacedEvent.getEmail());
+
+        } catch (Exception e) {
+            // This CATCH block stops the infinite loop!
+            log.error("Error processing message: {}", e.getMessage());
+        }
     }
 }

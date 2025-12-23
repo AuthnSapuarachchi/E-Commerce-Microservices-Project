@@ -107,81 +107,201 @@ const AdminDashboard = () => {
     }
   };
 
-  if (loading && products.length === 0) return <div style={{textAlign: "center", marginTop: "50px"}}>Loading Admin Data...</div>;
+  if (loading && products.length === 0) return (
+    <div style={{textAlign: "center", marginTop: "100px", fontSize: "18px", color: "#666"}}>
+      Loading Admin Data...
+    </div>
+  );
 
   return (
-    <div style={{ padding: "40px", maxWidth: "900px", margin: "0 auto" }}>
-      <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px"}}>
-        <h1>⚙️ Admin Dashboard</h1>
-        <button onClick={() => navigate("/")} style={{cursor: "pointer", padding: "10px"}}>← Back to Store</button>
+    <div style={{ 
+      padding: "40px 20px", 
+      maxWidth: "1200px", 
+      margin: "0 auto",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      background: "#f5f7fa",
+      minHeight: "100vh"
+    }}>
+      {/* Header */}
+      <div style={{
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        marginBottom: "30px",
+        background: "white",
+        padding: "20px 30px",
+        borderRadius: "12px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
+      }}>
+        <h1 style={{margin: 0, fontSize: "28px", color: "#1a1a1a"}}>⚙️ Admin Dashboard</h1>
+        <button 
+          onClick={() => navigate("/")} 
+          style={{
+            cursor: "pointer", 
+            padding: "10px 20px",
+            background: "#f0f0f0",
+            border: "none",
+            borderRadius: "8px",
+            fontSize: "14px",
+            fontWeight: "500",
+            transition: "all 0.2s"
+          }}
+          onMouseOver={(e) => e.target.style.background = "#e0e0e0"}
+          onMouseOut={(e) => e.target.style.background = "#f0f0f0"}
+        >
+          ← Back to Store
+        </button>
       </div>
 
-      <div style={{background: "#f9f9f9", padding: "20px", borderRadius: "8px", marginBottom: "30px", border: "1px solid #ddd"}}>
-        <h3>✨ Add New Product</h3>
+      {/* Add Product Card */}
+      <div style={{
+        background: "white", 
+        padding: "30px", 
+        borderRadius: "12px", 
+        marginBottom: "30px", 
+        boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
+      }}>
+        <h3 style={{marginTop: 0, marginBottom: "20px", fontSize: "20px", color: "#1a1a1a"}}>✨ Add New Product</h3>
         <form onSubmit={handleCreateProduct} style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px"}}>
             <input 
-                type="text" placeholder="Product Name (e.g. Samsung S24)" 
+                type="text" 
+                placeholder="Product Name (e.g. Samsung S24)" 
                 value={newProduct.name}
                 onChange={e => setNewProduct({...newProduct, name: e.target.value})}
-                style={{padding: "8px"}} required
-            />
-            {/* SKU Input REMOVED - Auto Generated */}
-             <input 
-                type="number" placeholder="Price ($)" 
-                value={newProduct.price}
-                onChange={e => setNewProduct({...newProduct, price: e.target.value})}
-                style={{padding: "8px"}} required
+                style={{
+                  padding: "12px 15px", 
+                  border: "2px solid #e0e0e0",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  outline: "none",
+                  transition: "border 0.2s"
+                }}
+                onFocus={(e) => e.target.style.borderColor = "#4a90e2"}
+                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
+                required
             />
             <input 
-                type="text" placeholder="Description" 
+                type="number" 
+                placeholder="Price ($)" 
+                value={newProduct.price}
+                onChange={e => setNewProduct({...newProduct, price: e.target.value})}
+                style={{
+                  padding: "12px 15px", 
+                  border: "2px solid #e0e0e0",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  outline: "none",
+                  transition: "border 0.2s"
+                }}
+                onFocus={(e) => e.target.style.borderColor = "#4a90e2"}
+                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
+                required
+            />
+            <input 
+                type="text" 
+                placeholder="Description" 
                 value={newProduct.description}
                 onChange={e => setNewProduct({...newProduct, description: e.target.value})}
-                style={{padding: "8px", gridColumn: "span 2"}}
+                style={{
+                  padding: "12px 15px", 
+                  gridColumn: "span 2",
+                  border: "2px solid #e0e0e0",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  outline: "none",
+                  transition: "border 0.2s"
+                }}
+                onFocus={(e) => e.target.style.borderColor = "#4a90e2"}
+                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
             />
-            <button type="submit" style={{gridColumn: "span 2", background: "black", color: "white", padding: "10px", border: "none", cursor: "pointer", fontWeight: "bold"}}>
+            <button 
+              type="submit" 
+              style={{
+                gridColumn: "span 2", 
+                background: "#1a1a1a", 
+                color: "white", 
+                padding: "12px", 
+                border: "none", 
+                cursor: "pointer", 
+                fontWeight: "600",
+                fontSize: "15px",
+                borderRadius: "8px",
+                transition: "all 0.2s"
+              }}
+              onMouseOver={(e) => e.target.style.background = "#333"}
+              onMouseOut={(e) => e.target.style.background = "#1a1a1a"}
+            >
                 Create Product
             </button>
         </form>
       </div>
 
-      <h3>📦 Inventory Manager</h3>
-      <table border="1" cellPadding="10" style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
-        <thead>
-          <tr style={{background: "#f4f4f4"}}>
-            <th>Product Name</th>
-            <th>ID (SKU)</th>
-            <th>Price</th>
-            <th>Current Stock</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((p) => {
-            const sku = p.id; // Use ID as SKU
-            const quantity = inventoryMap[sku] || 0;
-            const isLowStock = quantity < 10;
-
-            return (
-              <tr key={p.id}>
-                <td>{p.name}</td>
-                <td style={{fontSize: "12px", color: "#555"}}>{sku}</td>
-                <td>${p.price}</td>
-                <td style={{ color: isLowStock ? "red" : "green", fontWeight: "bold" }}>
-                  {quantity} {isLowStock && "(LOW)"}
-                </td>
-                <td>
-                  <button 
-                    onClick={() => handleAddStock(sku)}
-                    style={{ background: "#007bff", color: "white", border: "none", padding: "5px 10px", cursor: "pointer", borderRadius: "4px" }}
-                  >
-                    + Add Stock
-                  </button>
-                </td>
+      {/* Inventory Table Card */}
+      <div style={{
+        background: "white", 
+        padding: "30px", 
+        borderRadius: "12px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
+      }}>
+        <h3 style={{marginTop: 0, marginBottom: "20px", fontSize: "20px", color: "#1a1a1a"}}>📦 Inventory Manager</h3>
+        <div style={{overflowX: "auto"}}>
+          <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, textAlign: "left" }}>
+            <thead>
+              <tr style={{background: "#f8f9fa"}}>
+                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>Product Name</th>
+                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>ID (SKU)</th>
+                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>Price</th>
+                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>Current Stock</th>
+                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>Actions</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {products.map((p) => {
+                const sku = p.id;
+                const quantity = inventoryMap[sku] || 0;
+                const isLowStock = quantity < 10;
+
+                return (
+                  <tr key={p.id} style={{transition: "background 0.2s"}}>
+                    <td style={{padding: "15px", borderBottom: "1px solid #f0f0f0", fontWeight: "500"}}>{p.name}</td>
+                    <td style={{padding: "15px", borderBottom: "1px solid #f0f0f0", fontSize: "13px", color: "#666", fontFamily: "monospace"}}>{sku}</td>
+                    <td style={{padding: "15px", borderBottom: "1px solid #f0f0f0", fontWeight: "600", color: "#1a1a1a"}}>${p.price}</td>
+                    <td style={{ 
+                      padding: "15px", 
+                      borderBottom: "1px solid #f0f0f0",
+                      color: isLowStock ? "#e74c3c" : "#27ae60", 
+                      fontWeight: "600",
+                      fontSize: "15px"
+                    }}>
+                      {quantity} {isLowStock && <span style={{fontSize: "12px", color: "#e74c3c"}}>(LOW)</span>}
+                    </td>
+                    <td style={{padding: "15px", borderBottom: "1px solid #f0f0f0"}}>
+                      <button 
+                        onClick={() => handleAddStock(sku)}
+                        style={{ 
+                          background: "#4a90e2", 
+                          color: "white", 
+                          border: "none", 
+                          padding: "8px 16px", 
+                          cursor: "pointer", 
+                          borderRadius: "6px",
+                          fontSize: "14px",
+                          fontWeight: "500",
+                          transition: "all 0.2s"
+                        }}
+                        onMouseOver={(e) => e.target.style.background = "#357abd"}
+                        onMouseOut={(e) => e.target.style.background = "#4a90e2"}
+                      >
+                        + Add Stock
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
