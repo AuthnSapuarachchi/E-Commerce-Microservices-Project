@@ -4,6 +4,9 @@ jenkins_home/
 # Keycloak runtime data
 keycloak-data/
 
+# Node modules
+node_modules/
+
 # Docker volumes
 *.log
 
