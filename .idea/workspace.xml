@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7eb40a4d-d3d0-4342-969c-a20b2346c6c8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/shopwise/api_gateway/config/RateLimitConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +71,8 @@
     "Application.NotificationServiceApplication.executor": "Run",
     "Application.OrderServiceApplication.executor": "Run",
     "Application.ProductServiceApplication.executor": "Run",
+    "JUnit.OrderControllerTest.shouldPlaceOrder.executor": "Run",
+    "JUnit.OrderRepositoryTest.shouldSaveOrder.executor": "Run",
     "Maven.api-gateway [clean].executor": "Run",
     "Maven.api-gateway [compile].executor": "Run",
     "Maven.api-gateway [install].executor": "Run",
@@ -77,7 +84,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Dev-Branch",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/ASUS TUF X506H/Desktop/My Projects/React + Spring Boot + Docker/ShopWise Microservices/soursecode/shopwise-microservices",
     "project.structure.last.edited": "Project",
@@ -92,6 +99,10 @@
       <recent name="C:\Users\ASUS TUF X506H\Desktop\My Projects\React + Spring Boot + Docker\ShopWise Microservices\soursecode\shopwise-microservices\order-service" />
       <recent name="C:\Users\ASUS TUF X506H\Desktop\My Projects\React + Spring Boot + Docker\ShopWise Microservices\soursecode\shopwise-microservices\notification-service" />
       <recent name="C:\Users\ASUS TUF X506H\Desktop\My Projects\React + Spring Boot + Docker\ShopWise Microservices\soursecode\shopwise-microservices\discovery-server" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.shopwise.order_service.repository" />
+      <recent name="com.shopwise.order_service" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -111,50 +122,20 @@
           <value>
             <map>
               <entry key="ApiGatewayApplication" value="STOPPED" />
-              <entry key="DiscoveryServerApplication" value="STOPPED" />
-              <entry key="InventoryServiceApplication" value="STOPPED" />
-              <entry key="NotificationServiceApplication" value="STOPPED" />
               <entry key="OrderServiceApplication" value="STOPPED" />
-              <entry key="ProductServiceApplication" value="STOPPED" />
             </map>
           </value>
         </entry>
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ProductServiceApplication">
-    <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.shopwise.api_gateway.ApiGatewayApplication" />
-      <module name="api-gateway" />
+  <component name="RunManager" selected="Application.NotificationServiceApplication">
+    <configuration name="NotificationServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.shopwise.notification_service.NotificationServiceApplication" />
+      <module name="notification-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.shopwise.api_gateway.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DiscoveryServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.shopwise.discovery_server.DiscoveryServerApplication" />
-      <module name="discovery-server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.shopwise.discovery_server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="InventoryServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.shopwise.inventory_service.InventoryServiceApplication" />
-      <module name="inventory-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.shopwise.inventory_service.*" />
+          <option name="PATTERN" value="com.shopwise.notification_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -167,7 +148,7 @@
       <module name="order-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.shopwise.order_service.*" />
+          <option name="PATTERN" value="com.shopwise.order_service.repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -175,33 +156,50 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.shopwise.product_service.ProductServiceApplication" />
-      <module name="product-service" />
+    <configuration name="OrderControllerTest.shouldPlaceOrder" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="order-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.shopwise.product_service.*" />
+          <option name="PATTERN" value="com.shopwise.order_service.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="com.shopwise.order_service.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.shopwise.order_service.controller.OrderControllerTest" />
+      <option name="METHOD_NAME" value="shouldPlaceOrder" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderRepositoryTest.shouldSaveOrder" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="order-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.shopwise.order_service.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.shopwise.order_service.repository" />
+      <option name="MAIN_CLASS_NAME" value="com.shopwise.order_service.repository.OrderRepositoryTest" />
+      <option name="METHOD_NAME" value="shouldSaveOrder" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.DiscoveryServerApplication" />
-      <item itemvalue="Application.ApiGatewayApplication" />
-      <item itemvalue="Application.InventoryServiceApplication" />
+      <item itemvalue="Application.NotificationServiceApplication" />
       <item itemvalue="Application.OrderServiceApplication" />
-      <item itemvalue="Application.ProductServiceApplication" />
+      <item itemvalue="JUnit.OrderControllerTest.shouldPlaceOrder" />
+      <item itemvalue="JUnit.OrderRepositoryTest.shouldSaveOrder" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ProductServiceApplication" />
-        <item itemvalue="Application.ApiGatewayApplication" />
         <item itemvalue="Application.OrderServiceApplication" />
-        <item itemvalue="Application.InventoryServiceApplication" />
-        <item itemvalue="Application.DiscoveryServerApplication" />
+        <item itemvalue="JUnit.OrderControllerTest.shouldPlaceOrder" />
+        <item itemvalue="JUnit.OrderRepositoryTest.shouldSaveOrder" />
+        <item itemvalue="Application.NotificationServiceApplication" />
       </list>
     </recent_temporary>
   </component>
