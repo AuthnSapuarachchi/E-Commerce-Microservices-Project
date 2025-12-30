@@ -1,7 +1,7 @@
-package com.shopwise.order_service;
+package com.shopwise.order_service.repository;
 
+import com.shopwise.order_service.AbstractContainerBaseTest;
 import com.shopwise.order_service.model.Order; // Import your Entity
-import com.shopwise.order_service.repository.OrderRepository; // Import your Repository
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 // 1. Extend the Base Class so we get the Docker Container

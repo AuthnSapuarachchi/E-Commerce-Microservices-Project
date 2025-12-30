@@ -4,12 +4,20 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
+import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers
 public class AbstractContainerBaseTest {
     @Container
     static final MySQLContainer<?> MY_SQL_CONTAINER;
+
+    @Container
+    static final KafkaContainer KAFKA_CONTAINER = new KafkaContainer(
+            DockerImageName.parse("confluentinc/cp-kafka:7.6.1")
+    );
 
     static {
         MY_SQL_CONTAINER = new MySQLContainer<>("mysql:8.0")
