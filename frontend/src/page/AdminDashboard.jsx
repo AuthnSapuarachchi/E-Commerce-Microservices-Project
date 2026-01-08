@@ -9,7 +9,7 @@ const AdminDashboard = () => {
   const [inventoryMap, setInventoryMap] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // 👇 CHANGED: Removed 'skuCode' from state because Backend generates it
+  // CHANGED: Removed 'skuCode' from state because Backend generates it
   const [newProduct, setNewProduct] = useState({
     name: "",
     description: "",
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
     }
   };
 
-  // 👇 FIXED LOGIC HERE 👇
+  // FIXED LOGIC HERE
   const handleCreateProduct = async (e) => {
     e.preventDefault();
     if(!newProduct.name || !newProduct.price) {

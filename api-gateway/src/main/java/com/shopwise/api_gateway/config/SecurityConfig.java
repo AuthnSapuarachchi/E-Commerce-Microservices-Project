@@ -21,7 +21,6 @@ import java.util.List;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -33,10 +32,10 @@ public class SecurityConfig {
         serverHttpSecurity
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        // 👇 Debugging: Allow everything for a second to verify logs (Optional)
+                        //  Debugging: Allow everything for a second to verify logs (Optional)
                         // .anyExchange().permitAll()
 
-                        // 👇 The Real Rules
+                        //  The Real Rules
                         .pathMatchers(HttpMethod.POST, "/api/product").hasRole("admin")
                         .pathMatchers(HttpMethod.GET, "/api/product").permitAll()
                         .pathMatchers("/eureka/**").permitAll()
@@ -62,7 +61,7 @@ public class SecurityConfig {
         return source;
     }
 
-    // 👇 DEFINING THE CONVERTER DIRECTLY HERE TO GUARANTEE IT RUNS
+    // DEFINING THE CONVERTER DIRECTLY HERE TO GUARANTEE IT RUNS
     @Bean
     public Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();

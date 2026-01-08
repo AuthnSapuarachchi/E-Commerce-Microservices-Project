@@ -10,7 +10,7 @@ public class NotificationService {
     @KafkaListener(topics = "notificationTopic")
     public void handleNotification(OrderPlacedEvent orderPlacedEvent) {
         try {
-            // Your logic
+            //notification logic
             log.info("Received Notification for Order - {}", orderPlacedEvent.getOrderNumber());
 
             // Example: emailSender.send(orderPlacedEvent.getEmail());
