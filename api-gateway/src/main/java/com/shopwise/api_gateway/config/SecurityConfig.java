@@ -70,17 +70,17 @@ public class SecurityConfig {
             @Override
             public Collection<GrantedAuthority> convert(Jwt jwt) {
                 // 🔹 DEBUG LOGS - If you don't see these, something is very wrong with the setup.
-                System.out.println("🔥 DEBUG: Converter is running!");
+                System.out.println("DEBUG: Converter is running!");
 
                 Map<String, Object> realmAccess = (Map<String, Object>) jwt.getClaims().get("realm_access");
 
                 if (realmAccess == null || realmAccess.isEmpty()) {
-                    System.out.println("❌ DEBUG: 'realm_access' is null!");
+                    System.out.println("DEBUG: 'realm_access' is null!");
                     return new ArrayList<>();
                 }
 
                 List<String> roles = (List<String>) realmAccess.get("roles");
-                System.out.println("🔥 DEBUG: Roles found: " + roles);
+                System.out.println("DEBUG: Roles found: " + roles);
 
                 return roles.stream()
                         .map(roleName -> "ROLE_" + roleName) // Prefixing ROLE_

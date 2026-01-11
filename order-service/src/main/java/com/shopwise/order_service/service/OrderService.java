@@ -23,7 +23,7 @@ public class OrderService {
     private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
     private final InventoryClient inventoryClient;
 
-    // ✅ FIXED: Removed OrderRequest from here. We only inject Services and Repositories.
+    //  FIXED: Removed OrderRequest from here. We only inject Services and Repositories.
     public OrderService(OrderRepository orderRepository, ProductClient productClient, KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate, InventoryClient inventoryClient) {
         this.orderRepository = orderRepository;
         this.productClient = productClient;
