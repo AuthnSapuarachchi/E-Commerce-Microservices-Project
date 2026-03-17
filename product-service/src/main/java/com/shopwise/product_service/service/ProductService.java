@@ -32,7 +32,7 @@ public class ProductService {
 
     @Cacheable(value = "products")
     public List<ProductResponse> getAllProducts() {
-        log.info("📢 Fetching products from Database (Cache Miss)..."); // Log to prove when we hit DB
+        log.info("Fetching products from Database (Cache Miss)..."); // Log to prove when we hit DB
         // Simulate a "Slow Database" so you can feel the difference
         try { Thread.sleep(2000); } catch (InterruptedException e) {}
 

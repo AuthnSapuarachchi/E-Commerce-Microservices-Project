@@ -57,7 +57,7 @@ public class InventoryService {
         // Save it to the database
         inventoryRepository.save(inventory);
 
-        System.out.println("✅ Stock updated for " + skuCode + ". New Qty: " + inventory.getQuantity());
+        System.out.println("Stock updated for " + skuCode + ". New Qty: " + inventory.getQuantity());
 
     }
 

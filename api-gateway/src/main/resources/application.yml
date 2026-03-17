@@ -62,7 +62,7 @@ spring:
           predicates:
             - Path=/api/inventory/**
 
-# 5. Service Discovery (CRITICAL MISSING PART)
+# 5. Service Discovery 
 eureka:
   client:
     service-url:
@@ -72,7 +72,7 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 
 
-# 6. Logging (Optional but Recommended)
+# 6. Logging 
 logging:
   level:
     org.springframework.cloud.gateway: INFO

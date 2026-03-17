@@ -61,7 +61,7 @@ public class SecurityConfig {
         return source;
     }
 
-    // DEFINING THE CONVERTER DIRECTLY HERE TO GUARANTEE IT RUNS
+    // DEFINING THE CONVERTER DIRECTLY
     @Bean
     public Converter<Jwt, Mono<AbstractAuthenticationToken>> grantedAuthoritiesExtractor() {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
