@@ -20,7 +20,7 @@ spec:
         - containerPort: 8082
         env:
         - name: SPRING_DATASOURCE_URL
-          value: "jdbc:mysql://mysql:3306/inventory_service"
+          value: "jdbc:mysql://mysql:3306/inventory_service?createDatabaseIfNotExist=true"
         - name: SPRING_DATASOURCE_USERNAME
           value: "root"
         - name: SPRING_DATASOURCE_PASSWORD

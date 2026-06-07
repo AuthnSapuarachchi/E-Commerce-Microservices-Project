@@ -1,5 +1,11 @@
 package com.shopwise.order_service.service;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
+
 import com.shopwise.order_service.client.InventoryClient;
 import com.shopwise.order_service.client.ProductClient;
 import com.shopwise.order_service.dto.OrderLineItemsDto;
@@ -8,13 +14,9 @@ import com.shopwise.order_service.event.OrderPlacedEvent;
 import com.shopwise.order_service.model.Order;
 import com.shopwise.order_service.model.OrderLineItems;
 import com.shopwise.order_service.repository.OrderRepository;
+
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.transaction.Transactional;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -79,7 +81,7 @@ public class OrderService {
 
             // 5. Notify
             System.out.println("Step 4: Sending Notification...");
-            kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(order.getOrderNumber()));
+            kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(order.getOrderNumber())).get();
 
         } catch (Exception e) {
             // --- ROLLBACK LOGIC (MULTI-ITEM) ---

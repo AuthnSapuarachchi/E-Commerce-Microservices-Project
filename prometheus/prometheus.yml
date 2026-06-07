@@ -1,12 +1,19 @@
 global:
-  scrape_interval: 10s # Collect data every 10 seconds
+  scrape_interval: 10s
 
 scrape_configs:
-  - job_name: "order_service"
+  - job_name: "shopwise_microservices"
     metrics_path: "/actuator/prometheus"
     static_configs:
-      # CRITICAL: Since Order Service runs in IntelliJ (Host),
-      # we use 'host.docker.internal' so Docker can see Windows.
+      # Routing to host machine via Docker internal DNS
       - targets: ["host.docker.internal:8081"]
         labels:
           application: "Order Service"
+          
+      - targets: ["host.docker.internal:8080"]
+        labels:
+          application: "Product Service"
+          
+      - targets: ["host.docker.internal:8083"]
+        labels:
+          application: "Inventory Service"
