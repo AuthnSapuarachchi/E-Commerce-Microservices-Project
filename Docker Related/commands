@@ -1,0 +1,25 @@
+mvn -f inventory-service/pom.xml clean package -DskipTests
+mvn -f order-service/pom.xml clean package -DskipTests
+mvn -f product-service/pom.xml clean package -DskipTests
+mvn -f api-gateway/pom.xml clean package -DskipTests
+mvn -f notification-service/pom.xml clean package -DskipTests
+mvn -f discovery-server/pom.xml clean package -DskipTests
+
+
+docker-compose up -d --build
+
+
+docker logs order-service --tail 20
+
+
+minikube start
+
+kubectl delete -f k8s/ --recursive --ignore-not-found=true
+
+minikube docker-env | Invoke-Expression
+
+kubectl apply -f k8s/ --recursive
+
+kubectl get pods -w
+
+minikube stop
