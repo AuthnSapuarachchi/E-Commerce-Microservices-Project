@@ -1,4 +1,4 @@
-import './App.css'
+import './index.css';
 import { useEffect, useState } from 'react'
 import keycloak, { initPromise } from './Keycloak'
 import ProductList from "./components/ProductList";
@@ -40,59 +40,23 @@ function App() {
       <Route path="/cart" element={<Cart />} />
       {/* ROUTE 1: THE HOME PAGE (Store) */}
       <Route path="/" element={
-        <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" }}>
+        <div className="min-h-screen bg-gradient-to-br from-[#667eea] to-[#764ba2]">
           {/* Header/Navbar */}
-          <div style={{
-            background: "rgba(255, 255, 255, 0.95)",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-            padding: "15px 30px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "15px"
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-              <h1 style={{ margin: 0, fontSize: "24px", color: "#667eea" }}>🛒 ShopWise</h1>
+          <div className="bg-white/95 shadow-lg p-4 flex justify-between items-center flex-wrap gap-4">
+            <div className="flex items-center gap-4">
+              <h1 className="text-2xl font-bold text-[#667eea]">🛒 ShopWise</h1>
               {isAdmin && (
-                <span style={{
-                  background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-                  color: "white",
-                  padding: "5px 12px",
-                  borderRadius: "20px",
-                  fontSize: "12px",
-                  fontWeight: "bold",
-                  boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
-                }}>
+                <span className="bg-gradient-to-r from-pink-500 to-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md">
                   ⭐ ADMIN
                 </span>
               )}
             </div>
             
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center" }}>
+            <div className="flex gap-2 flex-wrap items-center">
               {isAdmin && (
                 <button 
                   onClick={() => navigate("/admin")}
-                  style={{
-                    padding: "10px 20px",
-                    background: "#2c3e50",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    fontWeight: "600",
-                    fontSize: "14px",
-                    transition: "all 0.3s ease",
-                    boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.background = "#34495e";
-                    e.target.style.transform = "translateY(-2px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = "#2c3e50";
-                    e.target.style.transform = "translateY(0)";
-                  }}
+                  className="px-4 py-2 bg-gray-800 text-white rounded-lg cursor-pointer font-semibold text-sm transition-all duration-300 shadow-md hover:bg-gray-700 hover:-translate-y-0.5"
                 >
                   ⚙️ Admin Dashboard
                 </button>
@@ -100,79 +64,21 @@ function App() {
               
               <button 
                 onClick={() => navigate("/my-orders")}
-                style={{
-                  padding: "10px 20px",
-                  background: "#3498db",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  transition: "all 0.3s ease",
-                  boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = "#2980b9";
-                  e.target.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = "#3498db";
-                  e.target.style.transform = "translateY(0)";
-                }}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer font-semibold text-sm transition-all duration-300 shadow-md hover:bg-blue-600 hover:-translate-y-0.5"
               >
                 📦 My Orders
               </button>
               
               <button 
                 onClick={() => navigate("/cart")}
-                style={{
-                  padding: "10px 20px",
-                  background: "#f39c12",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  transition: "all 0.3s ease",
-                  position: "relative",
-                  boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = "#e67e22";
-                  e.target.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = "#f39c12";
-                  e.target.style.transform = "translateY(0)";
-                }}
+                className="px-4 py-2 bg-yellow-500 text-white rounded-lg cursor-pointer font-semibold text-sm transition-all duration-300 relative shadow-md hover:bg-yellow-600 hover:-translate-y-0.5"
               >
                 🛒 Cart ({cart.reduce((acc, item) => acc + item.quantity, 0)})
               </button>
               
               <button 
                 onClick={() => keycloak.logout()}
-                style={{
-                  padding: "10px 20px",
-                  background: "#e74c3c",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  transition: "all 0.3s ease",
-                  boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = "#c0392b";
-                  e.target.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = "#e74c3c";
-                  e.target.style.transform = "translateY(0)";
-                }}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg cursor-pointer font-semibold text-sm transition-all duration-300 shadow-md hover:bg-red-600 hover:-translate-y-0.5"
               >
                 🚪 Logout
               </button>
@@ -180,36 +86,17 @@ function App() {
           </div>
 
           {/* Welcome Section */}
-          <div style={{
-            padding: "40px 20px",
-            textAlign: "center",
-            color: "white"
-          }}>
-            <h2 style={{
-              fontSize: "32px",
-              fontWeight: "700",
-              margin: "0 0 10px 0",
-              textShadow: "2px 2px 4px rgba(0,0,0,0.2)"
-            }}>
+          <div className="p-10 text-center text-white">
+            <h2 className="text-3xl font-bold mb-2 text-shadow">
               Welcome back, {keycloak.tokenParsed?.preferred_username}! 👋
             </h2>
-            <p style={{
-              fontSize: "18px",
-              opacity: 0.9,
-              margin: 0,
-              textShadow: "1px 1px 2px rgba(0,0,0,0.2)"
-            }}>
+            <p className="text-lg opacity-90 text-shadow-sm">
               Discover amazing products at great prices
             </p>
           </div>
 
           {/* Products Section */}
-          <div style={{
-            background: "#f8f9fa",
-            minHeight: "calc(100vh - 250px)",
-            padding: "30px 20px",
-            borderRadius: "30px 30px 0 0"
-          }}>
+          <div className="bg-gray-100 min-h-[calc(100vh-250px)] p-5 rounded-t-3xl">
             <ProductList keycloak={keycloak} />
           </div>
         </div>

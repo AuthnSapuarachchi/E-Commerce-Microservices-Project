@@ -108,76 +108,34 @@ const AdminDashboard = () => {
   };
 
   if (loading && products.length === 0) return (
-    <div style={{textAlign: "center", marginTop: "100px", fontSize: "18px", color: "#666"}}>
+    <div className="text-center mt-24 text-lg text-gray-600">
       Loading Admin Data...
     </div>
   );
 
   return (
-    <div style={{ 
-      padding: "40px 20px", 
-      maxWidth: "1200px", 
-      margin: "0 auto",
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-      background: "#f5f7fa",
-      minHeight: "100vh"
-    }}>
+    <div className="p-5 md:p-10 max-w-7xl mx-auto font-sans bg-gray-100 min-h-screen">
       {/* Header */}
-      <div style={{
-        display: "flex", 
-        justifyContent: "space-between", 
-        alignItems: "center", 
-        marginBottom: "30px",
-        background: "white",
-        padding: "20px 30px",
-        borderRadius: "12px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
-      }}>
-        <h1 style={{margin: 0, fontSize: "28px", color: "#1a1a1a"}}>⚙️ Admin Dashboard</h1>
+      <div className="flex justify-between items-center mb-8 bg-white p-6 rounded-xl shadow-md">
+        <h1 className="m-0 text-3xl font-bold text-gray-800">⚙️ Admin Dashboard</h1>
         <button 
           onClick={() => navigate("/")} 
-          style={{
-            cursor: "pointer", 
-            padding: "10px 20px",
-            background: "#f0f0f0",
-            border: "none",
-            borderRadius: "8px",
-            fontSize: "14px",
-            fontWeight: "500",
-            transition: "all 0.2s"
-          }}
-          onMouseOver={(e) => e.target.style.background = "#e0e0e0"}
-          onMouseOut={(e) => e.target.style.background = "#f0f0f0"}
+          className="cursor-pointer px-5 py-2.5 bg-gray-200 border-none rounded-lg text-sm font-medium transition-all duration-200 hover:bg-gray-300"
         >
           ← Back to Store
         </button>
       </div>
 
       {/* Add Product Card */}
-      <div style={{
-        background: "white", 
-        padding: "30px", 
-        borderRadius: "12px", 
-        marginBottom: "30px", 
-        boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
-      }}>
-        <h3 style={{marginTop: 0, marginBottom: "20px", fontSize: "20px", color: "#1a1a1a"}}>✨ Add New Product</h3>
-        <form onSubmit={handleCreateProduct} style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px"}}>
+      <div className="bg-white p-8 rounded-xl mb-8 shadow-md">
+        <h3 className="mt-0 mb-5 text-xl font-bold text-gray-800">✨ Add New Product</h3>
+        <form onSubmit={handleCreateProduct} className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input 
                 type="text" 
                 placeholder="Product Name (e.g. Samsung S24)" 
                 value={newProduct.name}
                 onChange={e => setNewProduct({...newProduct, name: e.target.value})}
-                style={{
-                  padding: "12px 15px", 
-                  border: "2px solid #e0e0e0",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  outline: "none",
-                  transition: "border 0.2s"
-                }}
-                onFocus={(e) => e.target.style.borderColor = "#4a90e2"}
-                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
+                className="p-3 border-2 border-gray-200 rounded-lg text-sm outline-none transition-colors duration-200 focus:border-blue-500"
                 required
             />
             <input 
@@ -185,16 +143,7 @@ const AdminDashboard = () => {
                 placeholder="Price ($)" 
                 value={newProduct.price}
                 onChange={e => setNewProduct({...newProduct, price: e.target.value})}
-                style={{
-                  padding: "12px 15px", 
-                  border: "2px solid #e0e0e0",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  outline: "none",
-                  transition: "border 0.2s"
-                }}
-                onFocus={(e) => e.target.style.borderColor = "#4a90e2"}
-                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
+                className="p-3 border-2 border-gray-200 rounded-lg text-sm outline-none transition-colors duration-200 focus:border-blue-500"
                 required
             />
             <input 
@@ -202,34 +151,11 @@ const AdminDashboard = () => {
                 placeholder="Description" 
                 value={newProduct.description}
                 onChange={e => setNewProduct({...newProduct, description: e.target.value})}
-                style={{
-                  padding: "12px 15px", 
-                  gridColumn: "span 2",
-                  border: "2px solid #e0e0e0",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  outline: "none",
-                  transition: "border 0.2s"
-                }}
-                onFocus={(e) => e.target.style.borderColor = "#4a90e2"}
-                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
+                className="p-3 md:col-span-2 border-2 border-gray-200 rounded-lg text-sm outline-none transition-colors duration-200 focus:border-blue-500"
             />
             <button 
               type="submit" 
-              style={{
-                gridColumn: "span 2", 
-                background: "#1a1a1a", 
-                color: "white", 
-                padding: "12px", 
-                border: "none", 
-                cursor: "pointer", 
-                fontWeight: "600",
-                fontSize: "15px",
-                borderRadius: "8px",
-                transition: "all 0.2s"
-              }}
-              onMouseOver={(e) => e.target.style.background = "#333"}
-              onMouseOut={(e) => e.target.style.background = "#1a1a1a"}
+              className="md:col-span-2 bg-gray-800 text-white p-3 border-none cursor-pointer font-semibold text-base rounded-lg transition-all duration-200 hover:bg-gray-900"
             >
                 Create Product
             </button>
@@ -237,22 +163,17 @@ const AdminDashboard = () => {
       </div>
 
       {/* Inventory Table Card */}
-      <div style={{
-        background: "white", 
-        padding: "30px", 
-        borderRadius: "12px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
-      }}>
-        <h3 style={{marginTop: 0, marginBottom: "20px", fontSize: "20px", color: "#1a1a1a"}}>📦 Inventory Manager</h3>
-        <div style={{overflowX: "auto"}}>
-          <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0, textAlign: "left" }}>
+      <div className="bg-white p-8 rounded-xl shadow-md">
+        <h3 className="mt-0 mb-5 text-xl font-bold text-gray-800">📦 Inventory Manager</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse separate border-spacing-0 text-left">
             <thead>
-              <tr style={{background: "#f8f9fa"}}>
-                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>Product Name</th>
-                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>ID (SKU)</th>
-                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>Price</th>
-                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>Current Stock</th>
-                <th style={{padding: "15px", fontWeight: "600", color: "#555", borderBottom: "2px solid #e0e0e0"}}>Actions</th>
+              <tr className="bg-gray-100">
+                <th className="p-4 font-semibold text-gray-600 border-b-2 border-gray-200">Product Name</th>
+                <th className="p-4 font-semibold text-gray-600 border-b-2 border-gray-200">ID (SKU)</th>
+                <th className="p-4 font-semibold text-gray-600 border-b-2 border-gray-200">Price</th>
+                <th className="p-4 font-semibold text-gray-600 border-b-2 border-gray-200">Current Stock</th>
+                <th className="p-4 font-semibold text-gray-600 border-b-2 border-gray-200">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -262,35 +183,17 @@ const AdminDashboard = () => {
                 const isLowStock = quantity < 10;
 
                 return (
-                  <tr key={p.id} style={{transition: "background 0.2s"}}>
-                    <td style={{padding: "15px", borderBottom: "1px solid #f0f0f0", fontWeight: "500"}}>{p.name}</td>
-                    <td style={{padding: "15px", borderBottom: "1px solid #f0f0f0", fontSize: "13px", color: "#666", fontFamily: "monospace"}}>{sku}</td>
-                    <td style={{padding: "15px", borderBottom: "1px solid #f0f0f0", fontWeight: "600", color: "#1a1a1a"}}>${p.price}</td>
-                    <td style={{ 
-                      padding: "15px", 
-                      borderBottom: "1px solid #f0f0f0",
-                      color: isLowStock ? "#e74c3c" : "#27ae60", 
-                      fontWeight: "600",
-                      fontSize: "15px"
-                    }}>
-                      {quantity} {isLowStock && <span style={{fontSize: "12px", color: "#e74c3c"}}>(LOW)</span>}
+                  <tr key={p.id} className="transition-colors duration-200 hover:bg-gray-50">
+                    <td className="p-4 border-b border-gray-200 font-medium">{p.name}</td>
+                    <td className="p-4 border-b border-gray-200 text-sm text-gray-500 font-mono">{sku}</td>
+                    <td className="p-4 border-b border-gray-200 font-semibold text-gray-800">${p.price}</td>
+                    <td className={`p-4 border-b border-gray-200 font-semibold text-base ${isLowStock ? "text-red-500" : "text-green-600"}`}>
+                      {quantity} {isLowStock && <span className="text-xs text-red-500">(LOW)</span>}
                     </td>
-                    <td style={{padding: "15px", borderBottom: "1px solid #f0f0f0"}}>
+                    <td className="p-4 border-b border-gray-200">
                       <button 
                         onClick={() => handleAddStock(sku)}
-                        style={{ 
-                          background: "#4a90e2", 
-                          color: "white", 
-                          border: "none", 
-                          padding: "8px 16px", 
-                          cursor: "pointer", 
-                          borderRadius: "6px",
-                          fontSize: "14px",
-                          fontWeight: "500",
-                          transition: "all 0.2s"
-                        }}
-                        onMouseOver={(e) => e.target.style.background = "#357abd"}
-                        onMouseOut={(e) => e.target.style.background = "#4a90e2"}
+                        className="bg-blue-500 text-white border-none px-4 py-2 cursor-pointer rounded-md text-sm font-medium transition-all duration-200 hover:bg-blue-600"
                       >
                         + Add Stock
                       </button>

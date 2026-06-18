@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: discovery-server
-        #This pulls the image you built yesterday!
+        #This pulls the image you built!
         image: authnbroo/discovery-server:latest
         imagePullPolicy: Always
         ports:

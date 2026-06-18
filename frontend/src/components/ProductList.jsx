@@ -121,19 +121,8 @@ const ProductList = ({ keycloak }) => {
 
   if (loading) {
     return (
-      <div style={{ 
-        padding: "40px", 
-        textAlign: "center",
-        fontSize: "18px",
-        color: "#666"
-      }}>
-        <div style={{
-          display: "inline-block",
-          padding: "20px 40px",
-          background: "white",
-          borderRadius: "12px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
-        }}>
+      <div className="p-10 text-center text-lg text-gray-600">
+        <div className="inline-block p-5 bg-white rounded-xl shadow-lg">
           ⏳ Loading products...
         </div>
       </div>
@@ -141,163 +130,57 @@ const ProductList = ({ keycloak }) => {
   }
 
   return (
-    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-      <h2 style={{
-        fontSize: "28px",
-        fontWeight: "700",
-        color: "#2c3e50",
-        marginBottom: "25px",
-        textAlign: "center"
-      }}>
+    <div className="p-5 max-w-7xl mx-auto">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
         📦 Available Products
       </h2>
       
       {error && (
-        <div style={{ 
-          background: "linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)", 
-          color: "white", 
-          padding: "16px 20px", 
-          borderRadius: "12px", 
-          marginBottom: "20px",
-          boxShadow: "0 4px 12px rgba(238, 90, 111, 0.3)",
-          fontWeight: "500",
-          textAlign: "center"
-        }}>
+        <div className="bg-gradient-to-r from-red-400 to-red-500 text-white p-4 rounded-lg mb-5 shadow-lg font-medium text-center">
           {error}
         </div>
       )}
 
       {successMsg && (
-        <div style={{ 
-          background: "linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)", 
-          color: "white", 
-          padding: "16px 20px", 
-          borderRadius: "12px", 
-          marginBottom: "20px",
-          boxShadow: "0 4px 12px rgba(86, 171, 47, 0.3)",
-          fontWeight: "500",
-          textAlign: "center"
-        }}>
+        <div className="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-lg mb-5 shadow-lg font-medium text-center">
           {successMsg}
         </div>
       )}
       
       {products.length === 0 ? (
-        <div style={{ 
-          textAlign: "center", 
-          padding: "60px 20px",
-          background: "white",
-          borderRadius: "16px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.08)"
-        }}>
-          <p style={{ fontSize: "18px", color: "#999", margin: 0 }}>📭 No products available</p>
+        <div className="text-center p-16 bg-white rounded-2xl shadow-md">
+          <p className="text-lg text-gray-500 m-0">📭 No products available</p>
         </div>
       ) : (
-        <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "20px" 
-        }}>
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-5">
           {products.map((product) => (
             <div 
               key={product.id} 
-              style={{ 
-                background: "white",
-                padding: "20px", 
-                borderRadius: "16px", 
-                display: "flex",
-                flexDirection: "column",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                transition: "all 0.3s ease",
-                border: "none"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.15)";
-                e.currentTarget.style.transform = "translateY(-5px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
+              className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-1.5 flex flex-col"
             >
-              <div style={{ flex: 1 }}>
-                <h3 style={{ 
-                  margin: "0 0 10px 0",
-                  fontSize: "20px",
-                  fontWeight: "700",
-                  color: "#2c3e50"
-                }}>
+              <div className="p-6 flex-grow">
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
                   {product.name}
                 </h3>
-                <p style={{ 
-                  color: "#7f8c8d", 
-                  margin: "0 0 15px 0",
-                  fontSize: "14px",
-                  lineHeight: "1.6"
-                }}>
+                <p className="text-gray-600 mb-4 text-sm leading-relaxed h-24 overflow-hidden">
                   {product.description}
                 </p>
-                <div style={{ 
-                  fontSize: "24px", 
-                  fontWeight: "700",
-                  color: "#27ae60",
-                  marginBottom: "15px"
-                }}>
+                <div className="text-3xl font-bold text-green-600 mb-4">
                   ${parseFloat(product.price).toFixed(2)}
                 </div>
               </div>
               
-              <div style={{ display: "flex", gap: "10px", marginTop: "auto" }}>
+              <div className="p-5 bg-gray-50 flex gap-3 mt-auto">
                 <button 
-                  style={{
-                    flex: 1,
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", 
-                    color: "white", 
-                    border: "none", 
-                    padding: "12px 20px", 
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    transition: "all 0.3s ease",
-                    boxShadow: "0 4px 10px rgba(102, 126, 234, 0.3)"
-                  }}
+                  className="flex-1 bg-gradient-to-r from-purple-600 to-blue-500 text-white border-none px-5 py-3 rounded-lg cursor-pointer text-sm font-bold transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl hover:-translate-y-1"
                   onClick={() => buyProduct(product)}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = "translateY(-2px)";
-                    e.target.style.boxShadow = "0 6px 15px rgba(102, 126, 234, 0.4)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = "translateY(0)";
-                    e.target.style.boxShadow = "0 4px 10px rgba(102, 126, 234, 0.3)";
-                  }}
                 >
                   🛒 Buy Now
                 </button>
                 
                 <button 
-                  style={{
-                    flex: 1,
-                    background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-                    color: "white", 
-                    border: "none", 
-                    padding: "12px 20px", 
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    transition: "all 0.3s ease",
-                    boxShadow: "0 4px 10px rgba(240, 147, 251, 0.3)"
-                  }}
+                  className="flex-1 bg-gradient-to-r from-pink-500 to-red-500 text-white border-none px-5 py-3 rounded-lg cursor-pointer text-sm font-bold transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl hover:-translate-y-1"
                   onClick={() => addToCart(product)}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = "translateY(-2px)";
-                    e.target.style.boxShadow = "0 6px 15px rgba(240, 147, 251, 0.4)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = "translateY(0)";
-                    e.target.style.boxShadow = "0 4px 10px rgba(240, 147, 251, 0.3)";
-                  }}
                 >
                   ➕ Add to Cart
                 </button>

@@ -72,7 +72,20 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 
 
-# 6. Logging 
+# 6. Logging
 logging:
   level:
     org.springframework.cloud.gateway: INFO
+
+# 7. Actuator & Tracing (Zipkin)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
